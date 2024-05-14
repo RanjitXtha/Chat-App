@@ -14,6 +14,7 @@ function App() {
       <BrowserRouter>
       <Routes>
           <Route path="/">
+            <Route path="Chat-App" element={currentUser?<Home />:<LogIn/>} />
             <Route index element={currentUser?<Home />:<LogIn/>} />
             <Route path="login" element = {<LogIn />}/>
             <Route path="register" element = {<Register />}/>
