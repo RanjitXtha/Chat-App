@@ -1,0 +1,206 @@
+import { FriendsContext } from "../context/chatContext";
+import { UserContext } from "../context/userContext";
+//import { storage } from "../firebase";
+import { useContext } from "react";
+import {v4 as uuid} from  "uuid";
+import { getDownloadURL, ref, uploadBytesResumable ,getStorage } from "firebase/storage";
+import { serverTimestamp, arrayUnion, Timestamp } from "firebase/firestore";
+import { db } from "../firebase";
+import { useEffect , useState , useRef } from "react";
+import { onSnapshot,doc,updateDoc } from "firebase/firestore";
+import '../cssFiles/messages.css';
+
+
+
+const Messages = ()=>{
+    const [messages , setMessages]=useState([]);
+    const {state} = useContext(FriendsContext);
+    useEffect(()=>{
+        const unsub = onSnapshot(doc(db, "chats", state.chatId), (doc) => {
+            if(doc.exists()){setMessages(doc.data().messages)}
+        });
+
+        return()=>{
+            unsub();
+        }
+    },[state.chatId]); //chatId is comb of id when we click friend from list. when we click other friend , chatid changes.
+
+    return(
+        <div className="chat-box"> 
+        <div className="chat">
+        {
+                messages.map((msg)=>(
+                    <Message message={msg} key={msg.id} />
+                ))
+            }
+
+        </div>
+        </div>
+       
+    )
+
+}
+
+
+const Message = ({  message }) => {
+    const { currentUser } = useContext(UserContext);
+    const { state } = useContext(FriendsContext);
+  
+    const ref = useRef();
+  
+    useEffect(() => {
+      ref.current?.scrollIntoView({ behavior: "smooth" });
+    }, [message]);
+
+    const getTimeAgoString = (timestamp) => {
+      const now = new Date();
+      const messageTime = timestamp.toDate();
+      const differenceInSeconds = Math.floor((now - messageTime) / 1000);
+  
+      if (differenceInSeconds < 60) {
+        return "few sec ago";
+      } else if (differenceInSeconds < 3600) {
+        const minutes = Math.floor(differenceInSeconds / 60);
+        return `${minutes} ${minutes === 1 ? "min" : "mins"} ago`;
+      } else if (differenceInSeconds < 86400) {
+        const hours = Math.floor(differenceInSeconds / 3600);
+        return `${hours} ${hours === 1 ? "hr" : "hrs"} ago`;
+      } else if (differenceInSeconds < 2592000) {
+        const days = Math.floor(differenceInSeconds / 86400);
+        return `${days} ${days === 1 ? "day" : "days"} ago`;
+      } else {
+        const years = Math.floor(differenceInSeconds / 31536000);
+        return `${years} ${years === 1 ? "yr" : "yrss"} ago`;
+      }
+    }
+  
+    return (
+      <div
+        ref={ref}
+        className={`message ${message.senderId === currentUser.uid?"owner":null}`}
+      >
+        <div className="message-box">
+          { message.text && <p>{message.text}</p>}
+          {message.img && <img src={message.img} alt="" />}
+        </div>
+        
+        <div className="message-info">
+          <img
+            src={
+              message.senderId === currentUser.uid
+                ? currentUser.photoURL
+                : state.user.photoURL
+            }
+            alt=""
+
+            className="profile-pic"
+          />
+          <p>{getTimeAgoString(message.date)}</p>
+        </div>
+
+        
+      </div>
+    );
+  };
+
+
+   const Input = () => {
+    const [text, setText] = useState("");
+    const [img, setImg] = useState(null);
+    const { currentUser } = useContext(UserContext);
+    const { state } = useContext(FriendsContext);
+    const storage = getStorage();
+  
+    const handleSend = async () => {
+      if (img) {
+        const storageRef = ref(storage, uuid());
+        
+        const uploadTask = uploadBytesResumable(storageRef, img);
+  
+        uploadTask.on('state_changed',
+        (snapshot) => {
+            
+        },
+          (error) => {
+            console.log(error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+              await updateDoc(doc(db, "chats", state.chatId), {
+                messages: arrayUnion({
+                  id: uuid(),
+                  text,
+                  senderId: currentUser.uid,
+                  date: Timestamp.now(),
+                  img: downloadURL,
+                }),
+              });
+            });
+          }
+        );
+      } else if(text.trim() !== ''){
+        console.log("sending");
+        console.log(state.chatId);
+        await updateDoc(doc(db, "chats", state.chatId), {
+          messages: arrayUnion({
+            id: uuid(),
+            text,
+            senderId: currentUser.uid,
+            date: Timestamp.now(),
+          }),
+        });
+      }
+  
+      
+      await updateDoc(doc(db, "userChats", currentUser.uid), {
+        [state.chatId + ".lastMessage"]: {
+          text,
+        },
+        [state.chatId + ".date"]: serverTimestamp(),
+      });
+  
+      await updateDoc(doc(db, "userChats", state.user.uid), {
+        [state.chatId + ".lastMessage"]: {
+          text,
+        },
+        [state.chatId + ".date"]: serverTimestamp(),
+      });
+  
+      setText("");
+      setImg(null);
+    };
+
+    const handleEnter=(e)=>{
+      e.code === 'Enter' && handleSend();
+    }
+
+    return (
+      <div className="input-bar">
+        <div className="text-bar">
+          <input
+            type="text"
+            placeholder="Type something..."
+            onChange={(e) => setText(e.target.value)}
+            value={text}
+            onKeyDown={handleEnter}
+          />
+        </div>
+        
+        <div className="send-buttons">
+          <input
+            className="file-bar"
+            type="file"
+            id="file"
+            onChange={(e) => setImg(e.target.files[0])}
+          />
+          <label htmlFor="file">
+            X
+          </label>
+          <button onClick={handleSend}>Send</button>
+        </div>
+      </div>
+    );
+  };
+
+
+  export  {Messages ,Input };

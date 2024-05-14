@@ -1,0 +1,80 @@
+.chat-box{
+    position: relative;
+    height:calc(100vh - 8rem);
+    padding-bottom:5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    
+    
+}
+
+.chat{
+    overflow-y: scroll;
+
+}
+
+.chat::-webkit-scrollbar{
+    display: none;
+}
+
+
+.input-bar{
+    position: absolute;
+    bottom:0px;
+    right:0px;
+    left:0px;
+    display: flex;
+    justify-content: space-between;
+    padding:1rem 2rem;
+    column-gap: 4rem;
+    background-color: lightblue;
+}
+
+.text-bar{
+    width:100%;
+}
+
+.text-bar>input{
+    width:100%;
+}
+
+.file-bar{
+    display: none;
+}
+
+.send-buttons{
+    display: flex;
+}
+
+.message{
+    display:flex;
+    column-gap: 2rem;
+    margin-bottom: 2rem;
+    justify-content: end;
+}
+
+.owner{
+    justify-content: start;
+}
+
+.owner .message-box{
+    order:2;
+}
+
+
+.message-info p{
+    font-size: 1rem;
+    
+}
+
+.message-box >p{
+    background-color: lightcoral;
+    padding:0.5rem 1rem;
+    border-radius: 2rem;
+    
+}
+
+
+
+
