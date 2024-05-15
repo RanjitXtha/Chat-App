@@ -9,6 +9,8 @@ import { db } from "../firebase";
 import { useEffect , useState , useRef } from "react";
 import { onSnapshot,doc,updateDoc } from "firebase/firestore";
 import '../cssFiles/messages.css';
+import { IoSendSharp } from "react-icons/io5";
+import { FaFileImage } from "react-icons/fa6";
 
 
 
@@ -28,6 +30,9 @@ const Messages = ()=>{
     return(
         <div className="chat-box"> 
         <div className="chat">
+          {
+            state.chatId==='null'?<p>Click on your friend to start a conversation</p>:null
+          }
         {
                 messages.map((msg)=>(
                     <Message message={msg} key={msg.id} />
@@ -194,9 +199,9 @@ const Message = ({  message }) => {
             onChange={(e) => setImg(e.target.files[0])}
           />
           <label htmlFor="file">
-            X
+            <FaFileImage />
           </label>
-          <button onClick={handleSend}>Send</button>
+          <button onClick={handleSend}><IoSendSharp /></button>
         </div>
       </div>
     );

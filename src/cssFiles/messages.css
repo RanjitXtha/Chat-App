@@ -1,12 +1,9 @@
 .chat-box{
-    position: relative;
-    height:calc(100vh - 8rem);
     padding-bottom:5rem;
+    height:100%;
     display: flex;
     flex-direction: column;
-    justify-content: end;
-    
-    
+    justify-content: end; 
 }
 
 .chat{
@@ -21,14 +18,15 @@
 
 .input-bar{
     position: absolute;
+    height:5rem;
     bottom:0px;
     right:0px;
     left:0px;
     display: flex;
     justify-content: space-between;
-    padding:1rem 2rem;
+    padding:1rem 4rem;
     column-gap: 4rem;
-    background-color: lightblue;
+    background-color: white;
 }
 
 .text-bar{
@@ -37,6 +35,11 @@
 
 .text-bar>input{
     width:100%;
+
+}
+
+.text-bar>input:focus{
+    outline: none;
 }
 
 .file-bar{
@@ -69,9 +72,20 @@
 }
 
 .message-box >p{
-    background-color: lightcoral;
+    color:white;
+    background-color: var(--msg);
     padding:0.5rem 1rem;
     border-radius: 2rem;
+    
+}
+
+.send-buttons{
+    display:flex;
+    align-items: center;
+    column-gap: 2rem;
+    font-size: 2.2rem;
+    color:var(--msg);
+    cursor: pointer;
     
 }
 

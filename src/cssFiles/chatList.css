@@ -2,11 +2,13 @@
     display: flex;
     column-gap: 1rem;
     margin-bottom: 1.7rem;
-
+    cursor: pointer;
+    padding:1rem;
 }
 
-.friend .profile-pic{
-
+.friend-active{
+    background-color: #232544;
+    border-radius: 4rem;
 }
 
 .last-message{
@@ -19,6 +21,3 @@
     flex-direction: column;
 }
 
-.titles{
-    margin:2rem 0rem;
-}

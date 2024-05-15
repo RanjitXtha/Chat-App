@@ -1,13 +1,17 @@
+.body{
+    display:grid;
+    grid-template-columns: 28rem 1fr;
+}
+
 header{
     display:grid;
-    grid-template-columns: 80% 20%;
-    padding:2rem 4rem;
+    padding:0rem 4rem 0rem 2rem;
     height:7rem;
 }
 
 .profile-bar{
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     column-gap: 1rem;
 
 }
@@ -19,23 +23,51 @@ header{
     overflow: hidden;
 }
 
-.body{
-    display:grid;
-    grid-template-columns: 28rem 1fr;
-    padding:1rem 4rem;
-    height:calc(100vh - 7rem);
-    overflow: hidden;
-    
-}
+
 
 .search-bar{
     padding:0.5rem 1rem;
     border-radius: 1.5rem;
-    border:2px solid black;
+    border:1px solid rgb(138, 138, 138);
+    background-color: transparent;
+}
+
+.search-bar:focus{
+    outline: none;
 }
 
 
 .chat-body{
     position: relative;
+    height:calc(100vh - 7rem);
+    padding:0rem 2rem;
+    background-color: var(--white);
 }
+
+.sidebar{
+    padding:0rem 3rem;
+    background-color: var(--dark);
+    color:white;
+}
+
+.sidebar >span{
+    display:grid;
+    align-items: center;
+    height:7rem;
+}
+
+h1{
+    font-size: 3rem;
+    font-weight: 5rem;
+    color:white;
+}
+
+.click-button{
+    background-color: var(--msg);
+    padding:0.7rem 1rem;
+    border-radius: 3rem;
+    color:white;
+}
+
+
 

@@ -9,7 +9,8 @@ import '../cssFiles/chatList.css';
 const ChatList = () => {
     const [Chats, setChats] = useState([]);
     const {currentUser}= useContext(UserContext);
-    const { dispatch } = useContext(FriendsContext);
+    const { state,dispatch } = useContext(FriendsContext);
+  
 
     useEffect(() => {
         const getChats = () => {
@@ -25,9 +26,18 @@ const ChatList = () => {
         currentUser.uid && getChats();
     }, [currentUser.uid]);
 
+    const [chatOrder, setChatOrder] = useState([]);
+
+    useEffect(() => {
+        setChatOrder(Object.values(Chats).map(chat => chat.userInfo.uid));
+    }, [Chats]);    
+
+    
 
     const handleSelect = (user) => {
         dispatch({ type: "ADD_USER", payload: user });
+        const filteredOrder = chatOrder.filter(chatId => chatId !== user.uid);
+        setChatOrder([user.uid, ...filteredOrder]);
     };
 
   
@@ -36,11 +46,12 @@ const ChatList = () => {
         <div className="chat-list">
             <p className="titles">Chats</p>
             {Object.entries(Chats).map((chat) => (
-                <div className="friend" key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
+                <div className={`friend ${chat[1].userInfo.uid===state.user.uid?'friend-active':null}`} key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)} >
                     <div className="profile-pic"><img src={chat[1].userInfo.photoURL} alt="user-avatar" /></div>
                     <div>
                         <p>{chat[1].userInfo.displayName}</p>
                         {
+                            
                             chat[1].lastMessage?
                                 <p className="last-message">{chat[1].lastMessage.text}</p>
                             :null
