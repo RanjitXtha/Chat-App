@@ -54,6 +54,10 @@ const Message = ({  message }) => {
     const ref = useRef();
   
     useEffect(() => {
+      ref.current?.scrollIntoView({ behavior: "auto", block: "end" });
+    }, []);
+
+    useEffect(() => {
       ref.current?.scrollIntoView({ behavior: "smooth" });
     }, [message]);
 
@@ -201,7 +205,7 @@ const Message = ({  message }) => {
           <label htmlFor="file">
             <FaFileImage />
           </label>
-          <button onClick={handleSend}><IoSendSharp /></button>
+          <button onClick={handleSend}><IoSendSharp style={{color:'var(--msg)'}} /></button>
         </div>
       </div>
     );

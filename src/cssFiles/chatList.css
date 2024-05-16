@@ -4,12 +4,18 @@
     margin-bottom: 1.7rem;
     cursor: pointer;
     padding:1rem;
+    align-items: center;
+}
+
+.friend p{
+    margin: 0;
 }
 
 .friend-active{
     background-color: #232544;
     border-radius: 4rem;
 }
+
 
 .last-message{
     font-size: 1.5rem;
