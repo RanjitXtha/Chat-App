@@ -1,6 +1,6 @@
 .body{
     display:grid;
-    grid-template-columns: 28rem 1fr;
+    grid-template-columns: 8rem 1fr 22rem;
 }
 
 header{
@@ -45,7 +45,9 @@ header{
 }
 
 .sidebar{
-    padding:0rem 3rem;
+    display: grid;
+    justify-content: center;
+    align-content: start;
     background-color: var(--dark);
     color:white;
 }

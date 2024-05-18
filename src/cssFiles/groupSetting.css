@@ -1,0 +1,24 @@
+.group-setting{
+    background-color: var(--dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height:100vh;
+    color:white;
+    text-align: center;
+}
+
+.setting-inputs > form{
+    display: flex;
+    flex-direction: column;
+    row-gap:1rem;
+}
+
+
+.group-setting input{
+    background-color: transparent;
+    border:1px solid gray;
+    border-radius: 4rem;
+    padding:0.5rem;
+}

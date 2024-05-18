@@ -5,11 +5,13 @@ import { db } from "../firebase";
 import { UserContext } from "../context/userContext";
 import { FriendsContext } from "../context/chatContext";
 import '../cssFiles/chatList.css';
+import { CGToggleContext } from "../context/chatGroupToggle.js";
 
 const ChatList = () => {
     const [Chats, setChats] = useState([]);
     const {currentUser}= useContext(UserContext);
     const { state,dispatch } = useContext(FriendsContext);
+    const {groupDispatch} = useContext(CGToggleContext);
   
 
     useEffect(() => {
@@ -36,6 +38,7 @@ const ChatList = () => {
 
     const handleSelect = (user) => {
         dispatch({ type: "ADD_USER", payload: user });
+        groupDispatch({type:'TOGGLE',payload:'chat'})
         const filteredOrder = chatOrder.filter(chatId => chatId !== user.uid);
         setChatOrder([user.uid, ...filteredOrder]);
     };

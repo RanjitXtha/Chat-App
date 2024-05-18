@@ -1,8 +1,6 @@
-import {useState, useEffect ,createContext, useContext, useReducer } from "react";
+import {createContext, useContext, useReducer } from "react";
 import { UserContext } from "./userContext";
-import { onSnapshot } from "firebase/firestore"
-import { doc } from "firebase/firestore";
-import { db } from "../firebase";
+
 
 
 export const FriendsContext = createContext();
@@ -11,7 +9,6 @@ export const FriendsContextProvider = ({children})=>{
     const {currentUser} = useContext(UserContext);
 
     const Reducer = (state,action)=>{
-        console.log(state);
         switch(action.type){
             case "ADD_USER":{
                 return{
@@ -22,7 +19,7 @@ export const FriendsContextProvider = ({children})=>{
                 }
             }
 
-            default:
+            default: 
                 return state;
         }
     }

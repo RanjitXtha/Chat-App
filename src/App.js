@@ -4,7 +4,9 @@ import {BrowserRouter , Routes , Route} from 'react-router-dom';
 import Home from './pages/Home';
 import LogIn from './pages/login';
 import { UserContext } from './context/userContext';
+import GroupSetting from './pages/GroupSetting';
 import { useContext } from 'react';
+
 
 function App() {
   const {currentUser} = useContext(UserContext);
@@ -18,6 +20,7 @@ function App() {
             <Route index element={currentUser?<Home />:<LogIn/>} />
             <Route path="login" element = {<LogIn />}/>
             <Route path="register" element = {<Register />}/>
+            <Route path="group-setting" element={<GroupSetting />}/>
           </Route>
       </Routes>
       </BrowserRouter>

@@ -7,31 +7,52 @@ import { getDownloadURL, ref, uploadBytesResumable ,getStorage } from "firebase/
 import { serverTimestamp, arrayUnion, Timestamp } from "firebase/firestore";
 import { db } from "../firebase";
 import { useEffect , useState , useRef } from "react";
-import { onSnapshot,doc,updateDoc } from "firebase/firestore";
+import { onSnapshot,doc,updateDoc ,getDoc} from "firebase/firestore";
 import '../cssFiles/messages.css';
 import { IoSendSharp } from "react-icons/io5";
 import { FaFileImage } from "react-icons/fa6";
-
+import { GroupContext } from "../context/groupContext";
+import { CGToggleContext } from "../context/chatGroupToggle.js";
 
 
 const Messages = ()=>{
     const [messages , setMessages]=useState([]);
     const {state} = useContext(FriendsContext);
+    const { groupData} = useContext(GroupContext);
+    const {CGState} = useContext(CGToggleContext);
+
     useEffect(()=>{
+      if(CGState.currentState==="chat"){
         const unsub = onSnapshot(doc(db, "chats", state.chatId), (doc) => {
+            if(doc.exists()){setMessages(doc.data().messages)}    
+        });
+
+        return()=>{
+          unsub();
+      }
+        
+      }
+    },[state.chatId]); //chatId is comb of id when we click friend from list. when we click other friend , chatid changes.
+
+
+    useEffect(()=>{
+      if(CGState.currentState==="group"){
+        const unsub = onSnapshot(doc(db, "chatRoom", groupData.groupId), (doc) => {
             if(doc.exists()){setMessages(doc.data().messages)}
         });
 
         return()=>{
-            unsub();
-        }
-    },[state.chatId]); //chatId is comb of id when we click friend from list. when we click other friend , chatid changes.
+          unsub();
+      }
+        
+      }
+    },[groupData.groupId]);
 
     return(
         <div className="chat-box"> 
         <div className="chat">
           {
-            state.chatId==='null'?<p>Click on your friend to start a conversation</p>:null
+            CGState.currentState==='null'?<p>Click on your friend to start a conversation</p>:null
           }
         {
                 messages.map((msg)=>(
@@ -118,6 +139,8 @@ const Message = ({  message }) => {
     const [img, setImg] = useState(null);
     const { currentUser } = useContext(UserContext);
     const { state } = useContext(FriendsContext);
+    const { groupData} = useContext(GroupContext);
+    const {CGState} = useContext(CGToggleContext);
     const storage = getStorage();
   
     const handleSend = async () => {
@@ -134,7 +157,10 @@ const Message = ({  message }) => {
             console.log(error);
           },
           () => {
+
             getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+
+             if(CGState.currentState==="chat"){
               await updateDoc(doc(db, "chats", state.chatId), {
                 messages: arrayUnion({
                   id: uuid(),
@@ -144,12 +170,28 @@ const Message = ({  message }) => {
                   img: downloadURL,
                 }),
               });
+             }else if(CGState.currentState==="group"){
+
+                await updateDoc(doc(db, "chatRoom", groupData.groupId), {
+                  messages: arrayUnion({
+                    id: uuid(),
+                    text,
+                    senderId: currentUser.uid,
+                    date: Timestamp.now(),
+                    img: downloadURL,
+                  }),
+                });
+
+             }
+
             });
+            
+
           }
         );
       } else if(text.trim() !== ''){
-        console.log("sending");
-        console.log(state.chatId);
+
+        if(CGState.currentState==="chat"){
         await updateDoc(doc(db, "chats", state.chatId), {
           messages: arrayUnion({
             id: uuid(),
@@ -158,22 +200,41 @@ const Message = ({  message }) => {
             date: Timestamp.now(),
           }),
         });
+      }else if(CGState.currentState==="group"){
+        try{
+
+        await updateDoc(doc(db, "chatRoom", groupData.groupId), {
+          messages: arrayUnion({
+            id: uuid(),
+            text,
+            senderId: currentUser.uid,
+            date: Timestamp.now(),
+          }),
+        });
+      }catch(err){
+        console.log(err);
+      }
+
+      }
       }
   
+      if(CGState.currentState==="chat"){
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [state.chatId + ".lastMessage"]: {
+            text,
+          },
+          [state.chatId + ".date"]: serverTimestamp(),
+        });
+    
+        await updateDoc(doc(db, "userChats", state.user.uid), {
+          [state.chatId + ".lastMessage"]: {
+            text,
+          },
+          [state.chatId + ".date"]: serverTimestamp(),
+        });
+
+      }
       
-      await updateDoc(doc(db, "userChats", currentUser.uid), {
-        [state.chatId + ".lastMessage"]: {
-          text,
-        },
-        [state.chatId + ".date"]: serverTimestamp(),
-      });
-  
-      await updateDoc(doc(db, "userChats", state.user.uid), {
-        [state.chatId + ".lastMessage"]: {
-          text,
-        },
-        [state.chatId + ".date"]: serverTimestamp(),
-      });
   
       setText("");
       setImg(null);
