@@ -1,6 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { Link } from "react-router-dom";
+import '../cssFiles/loginregister.css'
 
 const LogIn=()=>{
 
@@ -19,14 +20,14 @@ const LogIn=()=>{
     }
 
     return(
-        <div>
+        <div className="login-page">
             <h1>Login page</h1>
             <form onSubmit={handleSubmit}>
                 <input type="email" placeholder="email" />
                 <input type="password" placeholder="password" />
-                <button>Log In</button>
+                <button className="click-button">Log In</button>
             </form>
-            <Link to="/register">No account yet?</Link>
+            <Link className="click-button" to="/register">No account yet?</Link>
         </div>
     )
 }

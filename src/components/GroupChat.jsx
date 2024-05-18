@@ -1,9 +1,8 @@
-import Group from "../components/Group";
 import { onSnapshot } from "firebase/firestore";
 import {useEffect, useContext, useState } from "react";
 import { doc } from "firebase/firestore";
-import { db } from "../firebase";
-import { UserContext } from "../context/userContext";
+import { db } from "../firebase.js";
+import { UserContext } from "../context/userContext.js";
 import {GroupContext} from '../context/groupContext.js';
 import { CGToggleContext } from "../context/chatGroupToggle.js";
 import { useNavigate } from "react-router-dom";

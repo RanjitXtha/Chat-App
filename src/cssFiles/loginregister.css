@@ -1,0 +1,31 @@
+.login-page , .register-page{
+    background-color: var(--dark);
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login-page >form , .register-page form{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.login-page input , .register-page input{
+    min-width:25rem;
+    min-height:3rem;
+    background-color: transparent;
+    border: 2px solid gray;
+    border-radius: 4rem;
+    padding:0.5rem 1rem;
+}
+
+a{
+    text-decoration: none;
+}
+
+.login-page a ,.register-page a{
+    margin-top:3rem;
+}

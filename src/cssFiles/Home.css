@@ -71,5 +71,31 @@ h1{
     color:white;
 }
 
+.group-add-button{
+    position: relative;
+}
+
+.group-add-button >span{
+    font-size: 1.5rem;
+    background-color: var(--msg);
+    padding:0.5rem 1rem;
+    border-radius: 2rem;
+    color:white;
+    margin-left:0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+.group-add-button:hover >span{
+ opacity: 1;
+}
+
+.group-add-button >button{
+   width:3rem;
+   height:3rem;
+   font-size:2rem;
+}
+
 
 

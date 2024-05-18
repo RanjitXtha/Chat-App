@@ -8,7 +8,7 @@ import {Messages , Input} from "../components/Messages";
 import '../cssFiles/Home.css';
 import { FriendsContext } from "../context/chatContext";
 import { useNavigate } from "react-router-dom";
-import GroupChats from "./GroupChat";
+import GroupChats from "../components/GroupChat";
 import { CGToggleContext } from "../context/chatGroupToggle";
 import { GroupContext } from "../context/groupContext";
 
@@ -18,6 +18,12 @@ const Home=()=>{
     const {currentUser} = useContext(UserContext);
     const {state} = useContext(FriendsContext) ;
     const {groupData} = useContext(GroupContext);
+
+    const copyCode=async(Id)=>{
+        await navigator.clipboard.writeText(Id);
+        alert("Code copied to clipboard");
+        
+    }
 
 
     const renderProfile = () => {
@@ -31,14 +37,21 @@ const Home=()=>{
         } else if (CGState.currentState === "group") {
           return (
             <div style={{display:'flex',alignItems:'center',columnGap:'1rem'}}>
-            <img src={groupData.photoURL} className="profile-pic" />
-            <p>{groupData.displayName}</p>
-        </div>
+                <img src={groupData.photoURL} className="profile-pic" />
+                <p>{groupData.displayName}</p>
+                <div className="group-add-button">
+                    <button className="add-button" onClick={()=>copyCode(groupData.groupId)} >+</button>
+                    <span>Click to copy Room code</span>
+                </div>
+                
+            </div>
           );
         } else {
           return <div></div>;
         }
       };
+
+      
 
     return(
             <div className="body">

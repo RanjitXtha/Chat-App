@@ -67,19 +67,16 @@ const Register = ()=>{
 
 
     return(
-        <div>
+        <div className="register-page"> 
             <h1>Register page</h1>
-            <div>
                 <form onSubmit={handleSubmit}>
                     <input type="text" placeholder="username" />
                     <input type="email" placeholder="email" />
                     <input type="password" placeholder="password" />
                     <input type="file" />
-                    <button>Sign Up</button>
+                    <button className="click-button">Sign Up</button>
                 </form>
-                <Link to="/login">Already have an account?</Link>
-
-            </div>
+            <Link className="click-button" to="/login">Already have an account?</Link>
         </div>
     )
 }
