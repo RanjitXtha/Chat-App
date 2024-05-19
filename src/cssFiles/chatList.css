@@ -1,20 +1,35 @@
 .friend{
     display: flex;
     column-gap: 1rem;
-    margin-bottom: 1.7rem;
     cursor: pointer;
-    padding:1rem;
+    padding:1rem 0rem;
+    border-bottom:2px solid #CBD9E4;
     align-items: center;
     font-size: 1.6rem;
+    padding:1rem 1rem 1rem 1.5rem;
+    position: relative;
+    height:7.5rem;
 }
 
-.friend p{
+.friend p{ 
     margin: 0;
 }
 
 .friend-active{
-    background-color: #232544;
-    border-radius: 4rem;
+    background-color: var(--white);
+}
+.friend-info{
+    font-weight:500;
+}
+
+.friend-active::before{
+    position: absolute;
+    content:'';
+    top:0px;
+    left:0px;
+    background-color: var(--msg);
+    width:0.6rem;
+    height:100%;
 }
 
 

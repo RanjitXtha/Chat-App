@@ -56,13 +56,17 @@ const Home=()=>{
     return(
             <div className="body">
                 <div className="sidebar">
-                    <span>
-                        <h1>CA</h1>
-                    </span>
-
                     <div style={{marginTop:'3rem'}}>
                         <GroupChats />
                     </div>
+                </div>
+
+                <div className="sidebar-right">
+                    <h1 style={{padding:'1rem 2rem'}}>ChatApp</h1>
+                    <div style={{padding:'0rem 2rem',marginTop:'1rem'}}>
+                        <Search />
+                    </div>
+                    <ChatList />
                 </div>
                 
                 <div >
@@ -81,29 +85,13 @@ const Home=()=>{
                         </div>
                     </header>
     
-                        <div className="chat-body">
-                            <Messages />
-                    
-                            {
-                                CGState.currentState!=='null'?
-                                <Input />:null
-                            }
-                            
-                        </div>
-
-                
-
-                    
-
-                </div>
-
-                <div className="sidebar">
-                    <h1>ChatApp</h1>
-                    <div style={{marginTop:'1rem'}}>
-                        <Search />
-                        <ChatList />
+                    <div className="chat-body">
+                         <Messages />
+                         {
+                            CGState.currentState!=='null'?
+                            <Input />:null
+                        }       
                     </div>
-                    
                 </div>
             </div>
     )

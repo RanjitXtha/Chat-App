@@ -47,7 +47,6 @@ const ChatList = () => {
  
     return (
         <div className="chat-list">
-            <p className="titles">Chats</p>
             {Object.entries(Chats).map((chat) => (
                 <div className={`friend ${chat[1].userInfo.uid===state.user.uid?'friend-active':null}`} key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)} >
                     <div className="profile-pic"><img src={chat[1].userInfo.photoURL} alt="user-avatar" /></div>

@@ -17,11 +17,7 @@
 
 
 .input-bar{
-    position: absolute;
-    height:5rem;
-    bottom:0px;
-    right:0px;
-    left:0px;
+    height:6rem;
     display: flex;
     justify-content: space-between;
     padding:1rem 4rem;
@@ -36,6 +32,8 @@
 .text-bar>input{
     width:100%;
     border: none;
+    font-size:1.5rem;
+    height:3rem;
 
 }
 
@@ -65,7 +63,7 @@
 .owner .message-box{
     order:2;
 }
-
+ 
 
 .message-info p{
     font-size: 1rem;
@@ -87,7 +85,27 @@
     font-size: 2.2rem;
     color:var(--msg);
     cursor: pointer;
-    
+}
+
+
+.send-buttons > label{
+    background-color: var(--lightwhite);
+    border-radius: 50%;
+    height:3.5rem;
+    width:3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.send-buttons > button{
+    background-color: var(--msg);
+    height:3.3rem;
+    width:3.3rem;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 

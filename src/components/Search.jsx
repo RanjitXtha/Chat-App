@@ -3,6 +3,7 @@ import { serverTimestamp,  updateDoc , doc } from "firebase/firestore";
 import { query , collection , where , getDoc,setDoc , getDocs } from "firebase/firestore";
 import { useState , useContext } from "react";
 import { UserContext } from "../context/userContext";
+import { IoIosSearch } from "react-icons/io";
 
 
 const Search =()=>{
@@ -68,12 +69,17 @@ const Search =()=>{
 
 
     return(
-        <div>
-            <input type="text" placeholder="search users" 
-            onChange={e=>setSearchName(e.target.value)}
-            className="search-bar"
-            onKeyDown={handleKey}
+        <div style={{marginBottom:'2rem'}}>
+            <div className="search-bar">
+                <IoIosSearch />
+                <input type="text" placeholder="search users"
+                onChange={e=>setSearchName(e.target.value)}
+                
+                onKeyDown={handleKey}
             />
+
+            </div>
+           
             {
                 user?
                 <div onClick={startChat} style={{marginTop:'2rem',display:'flex',alignItems:'center',columnGap:'1rem'}}>

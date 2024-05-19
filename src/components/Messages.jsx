@@ -111,7 +111,7 @@ const Message = ({  message }) => {
       >
         <div className="message-box">
           { message.text && <p>{message.text}</p>}
-          {message.img && <img src={message.img} alt="" />}
+          {message.img && <img src={message.img} style={{borderRadius:'2rem',maxWidth:'50rem',maxHeight:'50rem'}} alt="" />}
         </div>
         
         <div className="message-info">
@@ -121,7 +121,7 @@ const Message = ({  message }) => {
                 ? currentUser.photoURL
                 : state.user.photoURL
             }
-            alt=""
+            alt={state.user.displayName}
 
             className="profile-pic"
           />
@@ -266,7 +266,7 @@ const Message = ({  message }) => {
           <label htmlFor="file">
             <FaFileImage />
           </label>
-          <button onClick={handleSend}><IoSendSharp style={{color:'var(--msg)'}} /></button>
+          <button onClick={handleSend}><IoSendSharp style={{color:'var(--lightwhite)'}} /></button>
         </div>
       </div>
     );
