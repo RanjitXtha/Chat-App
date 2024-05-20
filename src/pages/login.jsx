@@ -2,8 +2,10 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { Link } from "react-router-dom";
 import '../cssFiles/loginregister.css'
+import { useState } from "react";
 
 const LogIn=()=>{
+    const [error , setError] = useState(false);
 
     const handleSubmit=async (e)=>{
     e.preventDefault();
@@ -14,7 +16,7 @@ const LogIn=()=>{
             await signInWithEmailAndPassword(auth, email, password);
         }
         catch(error){
-            console.log("problem with login:"+error)
+           setError(true);
         }
     
     }
@@ -28,6 +30,7 @@ const LogIn=()=>{
                 <button className="click-button">Log In</button>
             </form>
             <Link className="click-button" to="/register">No account yet?</Link>
+            {error?<p style={{color:'white'}}>There was an error during login</p>:null}
         </div>
     )
 }

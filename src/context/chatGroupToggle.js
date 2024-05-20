@@ -5,7 +5,6 @@ export const CGToggleContext = createContext();
 export const CGToggleContextProvider=({children})=>{
 
     const Reducer = (state,action)=>{
-        console.log(state);
         switch(action.type){
             case "TOGGLE":{
                 return {currentState:action.payload};

@@ -6,10 +6,24 @@ import LogIn from './pages/login';
 import { UserContext } from './context/userContext';
 import GroupSetting from './pages/GroupSetting';
 import { useContext } from 'react';
-
+import { getDatabase, ref, onValue } from "firebase/database";
+import { db } from './firebase';
 
 function App() {
   const {currentUser} = useContext(UserContext);
+
+ 
+
+const db = getDatabase();
+const connectedRef = ref(db, ".info/connected");
+onValue(connectedRef, (snap) => {
+  if (snap.val() === true) {
+    console.log("connected");
+  } else {
+    console.log("not connected");
+  }
+});
+
 
   return (
     <div>

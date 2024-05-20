@@ -44,7 +44,7 @@ const GroupChats = ()=>{
 
     return(
         <div>
-            <div>
+            <div> 
                 {
                    
                     groupList.map(group=>(

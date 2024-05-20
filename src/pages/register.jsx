@@ -6,9 +6,11 @@ import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
+import { useState } from "react";
 
 const Register = ()=>{
     const navigate = useNavigate();
+    const [error , setError] = useState(false);
 
     const handleSubmit =async(e)=>{
         e.preventDefault();
@@ -60,6 +62,7 @@ const Register = ()=>{
             );
         } catch (error) {
             console.error(error);
+            setError(true);
         }
 
     }
@@ -77,6 +80,7 @@ const Register = ()=>{
                     <button className="click-button">Sign Up</button>
                 </form>
             <Link className="click-button" to="/login">Already have an account?</Link>
+            {error?<p style={{color:'white'}}>There was an error during register</p>:null}
         </div>
     )
 }

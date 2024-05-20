@@ -1,5 +1,4 @@
 .chat-box{
-    padding-bottom:5rem;
     height:100%;
     display: flex;
     flex-direction: column;
@@ -54,20 +53,37 @@
     column-gap: 2rem;
     margin-bottom: 2rem;
     justify-content: end;
+    align-items: center;
 }
 
 .owner{
     justify-content: start;
 }
 
-.owner .message-box{
-    order:2;
+.msg{
+    display:flex;
+    flex-direction: row-reverse;
+    column-gap: 2rem;
 }
- 
+
+.owner .msg  {
+    flex-direction: row;
+}
+
 
 .message-info p{
     font-size: 1rem;
-    
+}
+
+.message-info{
+    display:flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.owner .message-info{
+    align-items: start;
+
 }
 
 .message-box >p{
@@ -75,7 +91,7 @@
     background-color: var(--msg);
     padding:0.5rem 1rem;
     border-radius: 2rem;
-    
+    font-size: 1.4rem;
 }
 
 .send-buttons{

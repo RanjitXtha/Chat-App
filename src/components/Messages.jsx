@@ -105,30 +105,28 @@ const Message = ({  message }) => {
     }
   
     return (
-      <div
-        ref={ref}
-        className={`message ${message.senderId === currentUser.uid?"owner":null}`}
-      >
-        <div className="message-box">
-          { message.text && <p>{message.text}</p>}
-          {message.img && <img src={message.img} style={{borderRadius:'2rem',maxWidth:'50rem',maxHeight:'50rem'}} alt="" />}
-        </div>
-        
+      <div ref={ref}  className={`message ${message.senderId === currentUser.uid?"owner":null}`}>
         <div className="message-info">
-          <img
-            src={
+          <p>{message.senderId === currentUser.uid
+              ? currentUser.displayName
+              : state.user.displayName}
+          </p>
+          
+          <div className="msg">
+            <img  src={
               message.senderId === currentUser.uid
-                ? currentUser.photoURL
-                : state.user.photoURL
-            }
-            alt={state.user.displayName}
+              ? currentUser.photoURL
+              : state.user.photoURL
+              }  alt={state.user.displayName}  className="profile-pic"
+            />
 
-            className="profile-pic"
-          />
+             <div className="message-box">
+              { message.text && <p>{message.text}</p>}
+              {message.img && <img src={message.img} style={{borderRadius:'2rem',maxWidth:'50rem',maxHeight:'50rem'}} alt="" />}
+            </div>
+          </div>
           <p>{getTimeAgoString(message.date)}</p>
         </div>
-
-        
       </div>
     );
   };
