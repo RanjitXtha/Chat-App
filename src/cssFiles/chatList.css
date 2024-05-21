@@ -33,6 +33,8 @@
 }
 
 
+
+
 .last-message{
     font-size: 1.3rem;
     color:gray;
@@ -42,4 +44,3 @@
     display: flex;
     flex-direction: column;
 }
-

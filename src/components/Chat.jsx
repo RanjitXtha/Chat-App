@@ -45,7 +45,7 @@ const ChatList = () => {
 
   
  
-    return (
+    return ( 
         <div className="chat-list">
             {Object.entries(Chats).map((chat) => (
                 <div className={`friend ${chat[1].userInfo.uid===state.user.uid?'friend-active':null}`} key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)} >
